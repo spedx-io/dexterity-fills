@@ -10,7 +10,6 @@ from flask import Flask, request, jsonify
 
 load_dotenv()
 
-# Consolidate database parameters into a single dictionary
 DATABASE_PARAMS = {
     "database": os.getenv("DATABASE_NAME", "postgres"),
     "user": os.getenv("DATABASE_USER", "postgres"),
@@ -33,7 +32,7 @@ def webhook():
     if not isinstance(data, list) or not data:
         return jsonify({'error': "Invalid or missing data"}), 400
     
-    data = data[0]  # Assuming the first item in the list is the transaction data
+    data = data[0]
     if data.get("meta", {}).get("err") is not None:
         return jsonify({'error': "Transaction failed"}), 400
 
@@ -67,7 +66,7 @@ def handle_transaction(tr: Dict[str, Any]):
         with conn.cursor() as cursor:
             if not isinstance(tr, dict):
                 print(f"Unexpected type for transaction data: {type(tr)}. Expected a dictionary.")
-                return  # Exit the function if 'tr' is not a dictionary
+                return
 
             if tr.get("meta", {}).get("err") is not None:
                 print("Transaction failed. Skipping.")
@@ -82,7 +81,7 @@ def handle_transaction(tr: Dict[str, Any]):
                 try:
                     with conn.cursor() as cursor:
                         psycopg2.extras.execute_values(cursor, insert_fills_stmt, db_fills, page_size=1000)
-                    conn.commit()  # Ensure changes are committed to the database
+                    conn.commit()
                     print(f"Inserted {len(db_fills)} fill events.")
                 except Exception as e:
                     print(f"Failed to insert fill events due to error: {e}")
