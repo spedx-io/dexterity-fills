@@ -3,6 +3,8 @@ A minimal Flask web application that serves as an endpoint that can be passed to
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/ylnG3y?referralCode=thales)
 
+(Check out `db.py` for how to build your `fills` table)
+
 ## Helius Webhook
 ```js
 const createWebhook = async () => {
