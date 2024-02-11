@@ -1,6 +1,33 @@
-# flask
-A minimal Flask web application.
+# Dexterity Fills Webhook Server & API
+A minimal Flask web application that serves as an endpoint that can be passed to a [Helius Webhook](https://dev.helius.xyz/) instance to stream transactions for the **Dexterity Program ID**, proccess them, filter for **OrderFillEvent**s, parse and insert them into a **PostgresSQL Table**
 
-For a step-by-step guide to deploying on [Railway](https://railway.app/?referralCode=alphasec), see [this](https://alphasec.io/how-to-deploy-a-python-flask-app-on-railway/) post, or click the button below.
+## Helius Webhook
+```js
+const createWebhook = async () => {
+    try {
+      const response = await fetch(
+        "https://api.helius.xyz/v0/webhooks?api-key=<PASTE YOUR API KEY HERE>",
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            "webhookURL": "https://your-railway-deployment.app/webhooks",
+            "accountAddresses": ["FUfpR31LmcP1VSbz5zDaM7nxnH55iBHkpwusgrnhaFjL"],
+            "accountAddressOwners": [],
+            "encoding": "jsonParsed",
+            "webhookType": "raw"
+       }),
+        }
+      );
+      const data = await response.json();
+      console.log({ data });
+    } catch (e) {
+      console.error("error", e);
+    }
+  };
+  createWebhook();
+```
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/igzwwg?referralCode=alphasec)
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/ylnG3y?referralCode=thales)
