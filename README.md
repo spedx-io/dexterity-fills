@@ -1,6 +1,8 @@
 # Dexterity Fills Webhook Server & API
 A minimal Flask web application that serves as an endpoint that can be passed to a [Helius Webhook](https://dev.helius.xyz/) instance to stream transactions for the **Dexterity Program ID**, proccess them, filter for **OrderFillEvent**s, parse and insert them into a **PostgresSQL Table**
 
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/ylnG3y?referralCode=thales)
+
 ## Helius Webhook
 ```js
 const createWebhook = async () => {
@@ -29,5 +31,3 @@ const createWebhook = async () => {
   };
   createWebhook();
 ```
-
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/ylnG3y?referralCode=thales)
