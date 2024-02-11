@@ -7,10 +7,7 @@ jsonalias==0.1.1
 jsonrpcclient==4.0.3
 jsonrpcserver==5.0.9
 jsonschema==3.2.0
-jsonschema-specifications==2023.12.1
 psycopg2-binary==2.9.9
-pyobjc-framework-Photos==10.1
-pyobjc-framework-PhotosUI==10.1
 python-dotenv==1.0.1
 pytz==2022.7.1
 solana==0.30.2
