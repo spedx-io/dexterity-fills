@@ -124,5 +124,47 @@ def event_to_fill_data(tr: Dict[str, Any], event: OrderFillEvent) -> tuple:
     )
     return fill
 
+@app.route('/fills', methods=['GET'])
+def get_fills():
+    product = request.args.get('product')
+    trg = request.args.get('trg')
+    before = request.args.get('before')
+    after = request.args.get('after')
+    client_order_id = request.args.get('client_order_id')
+
+    if not product:
+        return jsonify({'error': 'Missing required parameter: product'}), 400
+
+    query = """
+    SELECT * FROM fills WHERE product = %s
+    """
+    query_params = [product]
+
+    if trg:
+        query += " AND (maker_trg = %s OR taker_trg = %s)"
+        query_params.extend([trg, trg])
+
+    if before:
+        query += " AND block_timestamp < %s"
+        query_params.append(before)
+
+    if after:
+        query += " AND block_timestamp > %s"
+        query_params.append(after)
+
+    if client_order_id:
+        query += " AND (taker_client_order_id = %s OR maker_client_order_id = %s)"
+        query_params.extend([client_order_id, client_order_id])
+
+    query += " ORDER BY block_timestamp DESC LIMIT 50"
+
+    with get_db_connection() as conn:
+        with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
+            cursor.execute(query, query_params)
+            results = cursor.fetchall()
+            fills = [dict(result) for result in results]
+
+    return jsonify(fills)
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=PORT)
