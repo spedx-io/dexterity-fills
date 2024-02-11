@@ -5,7 +5,7 @@ import pytz
 from datetime import datetime
 from typing import Dict, Any
 from dotenv import load_dotenv
-from utils import OrderFillEvent, parse_events_from_logs
+from src.utils import OrderFillEvent, parse_events_from_logs
 from flask import Flask, request, jsonify
 
 load_dotenv()
