@@ -14,7 +14,7 @@ backcall==0.2.0
 backoff==1.11.1
 base58==2.1.1
 based58==0.1.1
-bleach==4.1.0
+bleach==6.1.0
 blinker==1.7.0
 borsh-construct==0.1.0
 cachetools==4.2.4
