@@ -74,7 +74,7 @@ matplotlib==3.8.2
 matplotlib-inline==0.1.6
 mccabe==0.6.1
 mistune==0.8.4
-more-itertools==8.14.0
+more-itertools==10.2.0
 multidict==6.0.5
 nbclassic==1.0.0
 nbclient==0.5.13
